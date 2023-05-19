@@ -39,7 +39,7 @@ const Main = () => {
       }
     }
 
-    if (userscore === 10 || compscore === 10) {
+    if (userscore >= 10 || compscore >= 10) {
       if (userscore > compscore) {
         setResult("You won the game!!");
       } else if (compscore > userscore) {
