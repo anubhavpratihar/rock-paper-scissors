@@ -28,20 +28,17 @@ const Main = () => {
 
   useEffect(() => {
     const moves = userchoice + compchoice;
-    if (totalMatches >= 0) {
-      if (moves === "rockscissors" || moves === "scissorspaper" || moves === "paperrock") {
-        setUserscore((prevScore) => prevScore + 1);
-        setTurnresult(`You won!! as you chose ${userchoice} and computer chose ${compchoice}`);
-      } else if (moves === "paperscissors" || moves === "rockpaper" || moves === "scissorsrock") {
-        setCompscore((prevScore) => prevScore + 1);
-        setTurnresult(`You lost!! as you chose ${userchoice} and the computer chose ${compchoice}`);
-      } else if (moves === "rockrock" || moves === "paperpaper" || moves === "scissorsscissors") {
-        setTurnresult(`Nobody won as it was a draw!! as you chose ${userchoice} and computer chose ${compchoice}`);
-      }
-      setTotalMatches((prevMatches) => prevMatches - 1);
+    if (moves === "rockscissors" || moves === "scissorspaper" || moves === "paperrock") {
+      setTurnresult(`You won!! as you chose ${userchoice} and computer chose ${compchoice}`);
+    } else if (moves === "paperscissors" || moves === "rockpaper" || moves === "scissorsrock") {
+      setTurnresult(`You lost!! as you chose ${userchoice} and the computer chose ${compchoice}`);
+    } else if (moves === "rockrock" || moves === "paperpaper" || moves === "scissorsscissors") {
+      setTurnresult(`Nobody won as it was a draw!! as you chose ${userchoice} and computer chose ${compchoice}`);
     }
+  }, [userchoice, compchoice]);
 
-    if (totalMatches === 0) {
+  useEffect(() => {
+    if (userscore === 10 || compscore === 10) {
       if (userscore > compscore) {
         setResult("You won the game!!");
       } else if (compscore > userscore) {
@@ -51,7 +48,18 @@ const Main = () => {
       }
       setGameover(true);
     }
-  }, [userchoice, compchoice, userscore, compscore, totalMatches]);
+  }, [userscore, compscore]);
+
+  const handleScore = (result) => {
+    if (!gameover) {
+      if (result === "win") {
+        setUserscore((prevScore) => prevScore + 1);
+      } else if (result === "lose") {
+        setCompscore((prevScore) => prevScore + 1);
+      }
+    }
+    setTotalMatches((prevMatches) => prevMatches - 1);
+  };
 
   return (
     <div className="main">
@@ -71,7 +79,15 @@ const Main = () => {
 
       <div className="button-div">
         {choices.map((choice, index) => (
-          <button className="button" key={index} onClick={() => handleClick(choice)} disabled={gameover}>
+          <button
+            className="button"
+            key={index}
+            onClick={() => {
+              handleClick(choice);
+              handleScore(choice === userchoice ? "tie" : choice === choices[(choices.indexOf(userchoice) + 1) % 3] ? "win" : "lose");
+            }}
+            disabled={gameover || totalMatches <= 0}
+          >
             {choice}
           </button>
         ))}
