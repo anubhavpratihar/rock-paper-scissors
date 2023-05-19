@@ -29,10 +29,10 @@ const Main = () => {
     const moves = userchoice + compchoice;
     if (userscore < 10 && compscore < 10) {
       if (moves === "rockscissors" || moves === "scissorspaper" || moves === "paperrock") {
-        setUserscore((prevScore) => prevScore + 1);
+        setUserscore((prevScore) => (prevScore < 10 ? prevScore + 1 : prevScore));
         setTurnresult(`You won!! as you chose ${userchoice} and computer chose ${compchoice}`);
       } else if (moves === "paperscissors" || moves === "rockpaper" || moves === "scissorsrock") {
-        setCompscore((prevScore) => prevScore + 1);
+        setCompscore((prevScore) => (prevScore < 10 ? prevScore + 1 : prevScore));
         setTurnresult(`You lost!! as you chose ${userchoice} and the computer chose ${compchoice}`);
       } else if (moves === "rockrock" || moves === "paperpaper" || moves === "scissorsscissors") {
         setTurnresult(`Nobody won as it was a draw!! as you chose ${userchoice} and computer chose ${compchoice}`);
