@@ -8,6 +8,7 @@ const Main = () => {
   const [result, setResult] = useState("Let's see who wins the game!");
   const [turnresult, setTurnresult] = useState(null);
   const [gameover, setGameover] = useState(false);
+  const [totalMatches, setTotalMatches] = useState(10);
 
   const choices = ["rock", "paper", "scissors"];
 
@@ -27,26 +28,30 @@ const Main = () => {
 
   useEffect(() => {
     const moves = userchoice + compchoice;
-    if (userscore < 10 && compscore < 10) {
+    if (totalMatches > 0) {
       if (moves === "rockscissors" || moves === "scissorspaper" || moves === "paperrock") {
-        setUserscore((prevScore) => (prevScore < 10 ? prevScore + 1 : prevScore));
+        setUserscore((prevScore) => prevScore + 1);
         setTurnresult(`You won!! as you chose ${userchoice} and computer chose ${compchoice}`);
       } else if (moves === "paperscissors" || moves === "rockpaper" || moves === "scissorsrock") {
-        setCompscore((prevScore) => (prevScore < 10 ? prevScore + 1 : prevScore));
+        setCompscore((prevScore) => prevScore + 1);
         setTurnresult(`You lost!! as you chose ${userchoice} and the computer chose ${compchoice}`);
       } else if (moves === "rockrock" || moves === "paperpaper" || moves === "scissorsscissors") {
         setTurnresult(`Nobody won as it was a draw!! as you chose ${userchoice} and computer chose ${compchoice}`);
       }
+      setTotalMatches((prevMatches) => prevMatches - 1);
     }
 
-    if (userscore >= 10) {
-      setResult("You won the game!!");
-      setGameover(true);
-    } else if (compscore >= 10) {
-      setResult("Computer won the game");
+    if (totalMatches === 0) {
+      if (userscore > compscore) {
+        setResult("You won the game!!");
+      } else if (compscore > userscore) {
+        setResult("Computer won the game");
+      } else {
+        setResult("It's a tie!");
+      }
       setGameover(true);
     }
-  }, [userchoice, compchoice, userscore, compscore]);
+  }, [userchoice, compchoice, userscore, compscore, totalMatches]);
 
   return (
     <div className="main">
