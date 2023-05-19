@@ -1,5 +1,4 @@
-import React from 'react';
-import { useState , useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Main = () => {
   const [userchoice, setUserchoice] = useState("rock");
@@ -27,7 +26,7 @@ const Main = () => {
 
   useEffect(() => {
     const moves = userchoice + compchoice;
-    if (userscore < 9 && compscore < 9) {
+    if (userscore < 10 && compscore < 10) {
       if (moves === "rockscissors" || moves === "scissorspaper" || moves === "paperrock") {
         setUserscore(prevScore => prevScore + 1);
         setTurnresult(`You won!! as you chose ${userchoice} and computer chose ${compchoice}`);
@@ -35,15 +34,18 @@ const Main = () => {
         setCompscore(prevScore => prevScore + 1);
         setTurnresult(`You lost!! as you chose ${userchoice} and the computer chose ${compchoice}`);
       } else if (moves === "rockrock" || moves === "paperpaper" || moves === "scissorsscissors") {
-        setTurnresult(`nobody won as it was a draw !! as you chose ${userchoice} and computer chose ${compchoice}`);
+        setTurnresult(`Nobody won as it was a draw!! as you chose ${userchoice} and computer chose ${compchoice}`);
       }
+    } else {
+      setGameover(true);
+      setTurnresult(userscore === 10 ? "You won the game!!" : "Computer won the game");
     }
   }, [userchoice, compchoice, userscore, compscore]);
 
   return (
     <div className='main'>
       <div className='score'>
-        <h1>User score - {userscore} </h1>
+        <h1>User score - {userscore}</h1>
         <h1>Computer score - {compscore}</h1>
       </div>
 
@@ -58,26 +60,21 @@ const Main = () => {
 
       <div className='button-div'>
         {choices.map((choice, index) => (
-          <button className='button' key={index} onClick={() => handleClick(choice)} disabled={gameover}>
+          <button className='button' key={index} onClick={() => handleClick(choice)}>
             {choice}
           </button>
         ))}
       </div>
 
       <div className='turn-result'>
-        <h1> Turn Result - {turnresult} </h1>
-      </div>
-      <div className='final-result'>
-        <h1> Final Result - {userscore === 9 ? "You won the game!!" : "Computer won the game"} </h1>
+        <h1>Turn Result - {turnresult}</h1>
       </div>
 
-      <div className='restart-div'>
-        {gameover && (
-          <button className='reset' onClick={() => reset()}>
-            Restart ?
-          </button>
-        )}
-      </div>
+      {gameover && (
+        <div className='final-result'>
+          <h1>Final Result - {userscore === 10 ? "You won the game!!" : "Computer won the game"}</h1>
+        </div>
+      )}
     </div>
   );
 };
