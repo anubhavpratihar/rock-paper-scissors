@@ -29,9 +29,9 @@ const Main = () => {
     const moves = userchoice + compchoice;
     if (!gameover) {
       if (
-        (moves === "rockscissors" && userscore + 1 < 10) ||
-        (moves === "scissorspaper" && userscore + 1 < 10) ||
-        (moves === "paperrock" && userscore + 1 < 10)
+        (moves === "rockscissors" && userscore + 1 <= 10) ||
+        (moves === "scissorspaper" && userscore + 1 <= 10) ||
+        (moves === "paperrock" && userscore + 1 <= 10)
       ) {
         setTurnresult(`You won!! as you chose ${userchoice} and computer chose ${compchoice}`);
         setUserscore(userscore + 1);
@@ -40,9 +40,9 @@ const Main = () => {
           setGameover(true);
         }
       } else if (
-        (moves === "paperscissors" && compscore + 1 < 10) ||
-        (moves === "rockpaper" && compscore + 1 < 10) ||
-        (moves === "scissorsrock" && compscore + 1 < 10)
+        (moves === "paperscissors" && compscore + 1 <= 10) ||
+        (moves === "rockpaper" && compscore + 1 <= 10) ||
+        (moves === "scissorsrock" && compscore + 1 <= 10)
       ) {
         setTurnresult(`You lost!! as you chose ${userchoice} and the computer chose ${compchoice}`);
         setCompscore(compscore + 1);
@@ -51,9 +51,9 @@ const Main = () => {
           setGameover(true);
         }
       } else if (
-        (moves === "rockrock" && userscore < 10) ||
-        (moves === "paperpaper" && userscore < 10) ||
-        (moves === "scissorsscissors" && userscore < 10)
+        (moves === "rockrock" && userscore <= 10) ||
+        (moves === "paperpaper" && userscore <= 10) ||
+        (moves === "scissorsscissors" && userscore <= 10)
       ) {
         setTurnresult(`Nobody won as it was a draw!! as you chose ${userchoice} and computer chose ${compchoice}`);
       }
