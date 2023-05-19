@@ -28,7 +28,7 @@ const Main = () => {
 
   useEffect(() => {
     const moves = userchoice + compchoice;
-    if (totalMatches > 0) {
+    if (totalMatches >= 0) {
       if (moves === "rockscissors" || moves === "scissorspaper" || moves === "paperrock") {
         setUserscore((prevScore) => prevScore + 1);
         setTurnresult(`You won!! as you chose ${userchoice} and computer chose ${compchoice}`);
