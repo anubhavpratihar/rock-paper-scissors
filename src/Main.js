@@ -27,31 +27,20 @@ const reset = () => {
 }
 
 useEffect(() => {
-    const moves = userchoice + compchoice;
-    if(userscore <=9 || compscore <=9 ){
-        if(moves === "rockscissors" || moves === "scissorspaper" || moves === "paperrock" ){
-            const userupdatedscore = userscore + 1;
-            setUserscore(userupdatedscore);
-            setTurnresult(`You won!! as you chose ${userchoice} and computer chose ${compchoice}`);
-            if(userscore === 9){
-                setResult("You won the game!!");
-                setGameover(true);
-            }
-        }
-        if(moves === "paperscissors" || moves === "rockpaper" || moves === "scissorsrock"){
-            const compupdatedscore = compscore + 1;
-            setCompscore(compupdatedscore);
-            setTurnresult(`You lost!! as you chose ${userchoice} and the computer chose ${compchoice}`)
-            if(compscore === 9){
-                setResult("Computer won the game");
-                setGameover(true);
-            }
-        }
-        if(moves === "rockrock" || moves === "paperpaper" || moves === "scissorsscissors"){
-            setTurnresult(`nobody won as it was a draw !! as you chose ${userchoice} and computer chose ${compchoice}`)
-        }
+  const moves = userchoice + compchoice;
+  if (userscore < 9 && compscore < 9) {
+    if (moves === 'rockscissors' || moves === 'scissorspaper' || moves === 'paperrock') {
+      setUserscore(prevScore => prevScore + 1);
+      setTurnresult(`You won!! as you chose ${userchoice} and computer chose ${compchoice}`);
+    } else if (moves === 'paperscissors' || moves === 'rockpaper' || moves === 'scissorsrock') {
+      setCompscore(prevScore => prevScore + 1);
+      setTurnresult(`You lost!! as you chose ${userchoice} and the computer chose ${compchoice}`);
+    } else if (moves === 'rockrock' || moves === 'paperpaper' || moves === 'scissorsscissors') {
+      setTurnresult(`nobody won as it was a draw !! as you chose ${userchoice} and computer chose ${compchoice}`);
     }
-},[userchoice , compchoice])
+  }
+}, [userchoice, compchoice, userscore, compscore]);
+
 
   return <div className='main'>
       <div className='score'>
