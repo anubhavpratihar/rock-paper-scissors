@@ -1,89 +1,94 @@
 import React, { useState, useEffect } from 'react';
 
 const Main = () => {
-  const [userChoice, setUserChoice] = useState("rock");
-  const [compChoice, setCompChoice] = useState("rock");
-  const [userScore, setUserScore] = useState(0);
-  const [compScore, setCompScore] = useState(0);
+  const [userchoice, setUserchoice] = useState("rock");
+  const [compchoice, setCompchoice] = useState("rock");
+  const [userscore, setUserscore] = useState(0);
+  const [compscore, setCompscore] = useState(0);
   const [result, setResult] = useState("Let's see who wins the game!");
-  const [turnResult, setTurnResult] = useState(null);
-  const [gameOver, setGameOver] = useState(false);
+  const [turnresult, setTurnresult] = useState(null);
+  const [gameover, setGameover] = useState(false);
+  const [totalMatches, setTotalMatches] = useState(10);
 
   const choices = ["rock", "paper", "scissors"];
 
   const handleClick = (value) => {
-    setUserChoice(value);
+    setUserchoice(value);
     generateComputerChoice();
   };
 
   const generateComputerChoice = () => {
     const random = choices[Math.floor(Math.random() * choices.length)];
-    setCompChoice(random);
+    setCompchoice(random);
   };
 
   const reset = () => {
-    setUserChoice("rock");
-    setCompChoice("rock");
-    setUserScore(0);
-    setCompScore(0);
-    setResult("Let's see who wins the game!");
-    setTurnResult(null);
-    setGameOver(false);
+    window.location.reload();
   };
 
   useEffect(() => {
-    const moves = userChoice + compChoice;
-    if (userScore === 10 || compScore === 10) {
-      setGameOver(true);
-      setResult(userScore === 10 ? "You won the game!" : "Computer won the game");
-    } else if (!gameOver) {
+    const moves = userchoice + compchoice;
+    if (userscore < 10 && compscore < 10 && totalMatches > 0) {
       if (moves === "rockscissors" || moves === "scissorspaper" || moves === "paperrock") {
-        setUserScore(prevScore => prevScore + 1);
-        setTurnResult(`You won!! as you chose ${userChoice} and computer chose ${compChoice}`);
+        setTurnresult(`You won!! as you chose ${userchoice} and computer chose ${compchoice}`);
+        setUserscore(prevScore => prevScore + 1);
       } else if (moves === "paperscissors" || moves === "rockpaper" || moves === "scissorsrock") {
-        setCompScore(prevScore => prevScore + 1);
-        setTurnResult(`You lost!! as you chose ${userChoice} and the computer chose ${compChoice}`);
+        setTurnresult(`You lost!! as you chose ${userchoice} and the computer chose ${compchoice}`);
+        setCompscore(prevScore => prevScore + 1);
       } else if (moves === "rockrock" || moves === "paperpaper" || moves === "scissorsscissors") {
-        setTurnResult(`Nobody won as it was a draw !! as you chose ${userChoice} and computer chose ${compChoice}`);
+        setTurnresult(`Nobody won as it was a draw!! as you chose ${userchoice} and computer chose ${compchoice}`);
       }
     }
-  }, [userChoice, compChoice, userScore, compScore, gameOver]);
+
+    if (userscore === 10 || compscore === 10 || totalMatches === 0) {
+      if (userscore > compscore) {
+        setResult("You won the game!!");
+      } else if (compscore > userscore) {
+        setResult("Computer won the game");
+      } else {
+        setResult("It's a tie!");
+      }
+      setGameover(true);
+    }
+
+    setTotalMatches(prevMatches => prevMatches - 1);
+  }, [userchoice, compchoice, userscore, compscore, totalMatches]);
 
   return (
-    <div className="main">
-      <div className="score">
-        <h1>User score - {userScore}</h1>
-        <h1>Computer score - {compScore}</h1>
+    <div className='main'>
+      <div className='score'>
+        <h1>User score - {userscore}</h1>
+        <h1>Computer score - {compscore}</h1>
       </div>
 
-      <div className="choice">
-        <div className="user-choice">
-          <img className="user-hand" src={`../images/${userChoice}.png`} width="200px" height="100px" alt={userChoice} />
+      <div className='choice'>
+        <div className='user-choice'>
+          <img className='user-hand' src={`../images/${userchoice}.png`} width="200px" height="100px" alt="User choice" />
         </div>
-        <div className="comp-choice">
-          <img className="comp-hand" src={`../images/${compChoice}.png`} width="200px" height="100px" alt={compChoice} />
+        <div className='comp-choice'>
+          <img className='comp-hand' src={`../images/${compchoice}.png`} width="200px" height="100px" alt="Computer choice" />
         </div>
       </div>
 
-      <div className="button-div">
+      <div className='button-div'>
         {choices.map((choice, index) => (
-          <button className="button" key={index} onClick={() => handleClick(choice)} disabled={gameOver}>
+          <button className='button' key={index} onClick={() => handleClick(choice)} disabled={gameover}>
             {choice}
           </button>
         ))}
       </div>
 
-      <div className="turn-result">
-        <h1>Turn Result - {turnResult}</h1>
+      <div className='turn-result'>
+        <h1>Turn Result - {turnresult}</h1>
       </div>
-      <div className="final-result">
+      <div className='final-result'>
         <h1>Final Result - {result}</h1>
       </div>
 
-      <div className="restart-div">
-        {gameOver && (
-          <button className="reset" onClick={reset}>
-            Restart ?
+      <div className='restart-div'>
+        {gameover && (
+          <button className='reset' onClick={reset}>
+            Restart?
           </button>
         )}
       </div>
