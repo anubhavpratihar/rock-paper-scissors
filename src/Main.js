@@ -22,19 +22,19 @@ const Main = () => {
 
   useEffect(() => {
     const moves = userchoice + compchoice;
-    if (userscore < 10 && compscore < 10) {
+    if (userscore < 100 && compscore < 100) {
       if (moves === "rockscissors" || moves === "scissorspaper" || moves === "paperrock") {
-        setUserscore(prevScore => prevScore + 1);
+        setUserscore(prevScore => prevScore + 10);
         setTurnresult(`You won!! as you chose ${userchoice} and computer chose ${compchoice}`);
       } else if (moves === "paperscissors" || moves === "rockpaper" || moves === "scissorsrock") {
-        setCompscore(prevScore => prevScore + 1);
+        setCompscore(prevScore => prevScore + 10);
         setTurnresult(`You lost!! as you chose ${userchoice} and the computer chose ${compchoice}`);
       } else if (moves === "rockrock" || moves === "paperpaper" || moves === "scissorsscissors") {
         setTurnresult(`Nobody won as it was a draw!! as you chose ${userchoice} and computer chose ${compchoice}`);
       }
     } else {
       setGameover(true);
-      setTurnresult(userscore === 10 ? "You won the game!!" : "Computer won the game");
+      setTurnresult(userscore === 100 ? "You won the game!!" : "Computer won the game");
     }
   }, [userchoice, compchoice, userscore, compscore]);
 
@@ -56,19 +56,15 @@ const Main = () => {
 
       <div className='button-div'>
         {choices.map((choice, index) => (
-          <button className='button' key={index} onClick={() => handleClick(choice)}>
-            {choice}
+          <button className='choice-button' key={index} onClick={() => handleClick(choice)}>
+            {choice.charAt(0).toUpperCase() + choice.slice(1)}
           </button>
         ))}
       </div>
 
-      <div className='turn-result'>
-        <h1>Turn Result - {turnresult}</h1>
-      </div>
-
       {gameover && (
-        <div className='final-result'>
-          <h1>Final Result - {userscore === 10 ? "You won the game!!" : "Computer won the game"}</h1>
+        <div className='game-over'>
+          <h1>{turnresult}</h1>
         </div>
       )}
     </div>
