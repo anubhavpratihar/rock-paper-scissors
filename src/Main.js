@@ -20,10 +20,6 @@ const Main = () => {
     setCompchoice(random);
   };
 
-  const reset = () => {
-    window.location.reload();
-  };
-
   useEffect(() => {
     const moves = userchoice + compchoice;
     if (userscore < 10 && compscore < 10) {
