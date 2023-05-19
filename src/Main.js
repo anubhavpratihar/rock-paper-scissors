@@ -39,10 +39,10 @@ const Main = () => {
       }
     }
 
-    if (userscore === 10) {
+    if (userscore >= 10) {
       setResult("You won the game!!");
       setGameover(true);
-    } else if (compscore === 10) {
+    } else if (compscore >= 10) {
       setResult("Computer won the game");
       setGameover(true);
     }
