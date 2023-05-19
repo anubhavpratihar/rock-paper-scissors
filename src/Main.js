@@ -36,8 +36,7 @@ const Main = () => {
           setResult('You won the game!!');
           setGameover(true);
         }
-      }
-      if (moves === 'paperscissors' || moves === 'rockpaper' || moves === 'scissorsrock') {
+      } else if (moves === 'paperscissors' || moves === 'rockpaper' || moves === 'scissorsrock') {
         const compupdatedscore = compscore + 1;
         setCompscore(compupdatedscore);
         setTurnresult(`You lost!! as you chose ${userchoice} and the computer chose ${compchoice}`);
@@ -45,8 +44,7 @@ const Main = () => {
           setResult('Computer won the game');
           setGameover(true);
         }
-      }
-      if (moves === 'rockrock' || moves === 'paperpaper' || moves === 'scissorsscissors') {
+      } else if (moves === 'rockrock' || moves === 'paperpaper' || moves === 'scissorsscissors') {
         setTurnresult(`Nobody won as it was a draw!! as you chose ${userchoice} and computer chose ${compchoice}`);
       }
     }
@@ -85,7 +83,7 @@ const Main = () => {
 
       <div className="restart-div">
         {gameover && (
-          <button className="reset" onClick={() => reset()}>
+          <button className="reset" onClick={() => { reset(); }}>
             Restart?
           </button>
         )}
